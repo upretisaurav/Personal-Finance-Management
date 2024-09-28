@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/authService';
+import { login } from '../api/authService';
 import '../styles/Login.css'; 
 
 function Login() {
@@ -16,7 +16,7 @@ function Login() {
     try {
       const response = await login(email, password);
 
-      if (response.ok) {
+      if (response.status === 200) {
         navigate('/welcome');
       } else {
         setError('Invalid email or password!');
