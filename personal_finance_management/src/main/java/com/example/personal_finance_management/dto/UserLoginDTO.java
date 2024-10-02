@@ -1,4 +1,4 @@
-package com.example.personal_finance_management.modules.user.dto;
+package com.example.personal_finance_management.dto;
 
 import lombok.Data;
 

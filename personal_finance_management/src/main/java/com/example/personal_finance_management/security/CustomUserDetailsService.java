@@ -1,7 +1,7 @@
 package com.example.personal_finance_management.security;
 
-import com.example.personal_finance_management.modules.user.entity.User;
-import com.example.personal_finance_management.modules.user.repository.UserRepository;
+import com.example.personal_finance_management.entities.User;
+import com.example.personal_finance_management.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

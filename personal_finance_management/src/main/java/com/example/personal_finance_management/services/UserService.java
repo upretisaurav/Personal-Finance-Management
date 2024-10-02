@@ -1,9 +1,9 @@
-package com.example.personal_finance_management.modules.user.service;
+package com.example.personal_finance_management.services;
 
-import com.example.personal_finance_management.modules.user.dto.UserLoginDTO;
-import com.example.personal_finance_management.modules.user.dto.UserRegistrationDTO;
-import com.example.personal_finance_management.modules.user.entity.User;
-import com.example.personal_finance_management.modules.user.repository.UserRepository;
+import com.example.personal_finance_management.dto.UserLoginDTO;
+import com.example.personal_finance_management.dto.UserRegistrationDTO;
+import com.example.personal_finance_management.entities.User;
+import com.example.personal_finance_management.repositories.UserRepository;
 import com.example.personal_finance_management.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

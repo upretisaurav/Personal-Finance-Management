@@ -1,4 +1,4 @@
-package com.example.personal_finance_management.modules.user.entity;
+package com.example.personal_finance_management.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

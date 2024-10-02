@@ -1,9 +1,9 @@
-package com.example.personal_finance_management.modules.user.controller;
+package com.example.personal_finance_management.controllers;
 
-import com.example.personal_finance_management.modules.user.dto.AuthResponseDTO;
-import com.example.personal_finance_management.modules.user.dto.UserLoginDTO;
-import com.example.personal_finance_management.modules.user.dto.UserRegistrationDTO;
-import com.example.personal_finance_management.modules.user.service.UserService;
+import com.example.personal_finance_management.dto.AuthResponseDTO;
+import com.example.personal_finance_management.dto.UserLoginDTO;
+import com.example.personal_finance_management.dto.UserRegistrationDTO;
+import com.example.personal_finance_management.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
