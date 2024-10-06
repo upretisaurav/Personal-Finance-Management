@@ -17,7 +17,7 @@ function Login() {
       const response = await login(email, password);
 
       if (response.status === 200) {
-        navigate('/welcome');
+        navigate('/expense');
       } else {
         setError('Invalid email or password!');
       }
