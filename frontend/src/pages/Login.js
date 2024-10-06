@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/authService';
-import '../styles/Login.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -11,13 +11,12 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); 
+    setError('');
 
     try {
       const response = await login(email, password);
-
       if (response.status === 200) {
-        navigate('/expense');
+        navigate('/dashboard');
       } else {
         setError('Invalid email or password!');
       }
@@ -27,30 +26,40 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Login</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Password:</label>
+            <input
+              type="password"
+              id="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+        </form>
+        <div className="mt-3 text-center">
+          <span>Don't have an account? </span>
+          <a href="/register" className="text-primary">Register</a>
         </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="login-button">Login</button>
-      </form>
+      </div>
     </div>
   );
 }
