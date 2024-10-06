@@ -3,6 +3,7 @@ package com.example.personal_finance_management.services;
 import com.example.personal_finance_management.dto.UserLoginDTO;
 import com.example.personal_finance_management.dto.UserRegistrationDTO;
 import com.example.personal_finance_management.entities.User;
+import com.example.personal_finance_management.exceptions.ResourceNotFoundException;
 import com.example.personal_finance_management.repositories.UserRepository;
 import com.example.personal_finance_management.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -61,5 +62,14 @@ public class UserService {
             log.error("Failed to authenticate user with email: {}. Error: {}", userLoginDTO.getEmail(), e.getMessage());
             throw e;
         }
+    }
+
+    public User getCurrentUser(String email) {
+        log.info("Fetching current user with email: {}", email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    log.error("User not found with email: {}", email);
+                    return new ResourceNotFoundException("User not found with email: " + email);
+                });
     }
 }
