@@ -1,4 +1,4 @@
-package com.example.personal_finance_management.services;
+package com.example.personal_finance_management.controller;
 
 import com.example.personal_finance_management.dto.BudgetDTO;
 import com.example.personal_finance_management.entities.Budget;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
-class BudgetServiceIntegrationTest {
+class BudgetControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
