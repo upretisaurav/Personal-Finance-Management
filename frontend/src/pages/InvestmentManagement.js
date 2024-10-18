@@ -134,16 +134,6 @@ const InvestmentManagement = () => {
                   {investment.isActive && (
                     <>
                       <button
-                        className="btn btn-outline-primary btn-sm"
-                        onClick={() => {
-                          setCurrentInvestment(investment);
-                          setIsEditing(true);
-                          setShowInvestmentModal(true);
-                        }}
-                      >
-                        <PencilLine size={16} />
-                      </button>
-                      <button
                         className="btn btn-outline-success btn-sm"
                         onClick={() => {
                           setCurrentInvestment(investment);

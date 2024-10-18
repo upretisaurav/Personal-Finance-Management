@@ -123,16 +123,6 @@ const BudgetManagement = () => {
                 <p className="mb-2">Duration: {new Date(budget.startDate).toLocaleDateString()} - {new Date(budget.endDate).toLocaleDateString()}</p>
                 {budgetStatuses[budget.category] && (
                   <div>
-                    <div className="progress mb-2">
-                      <div
-                        className="progress-bar"
-                        style={{ width: `${Math.min((budgetStatuses[budget.category].spentAmount / budget.targetAmount) * 100, 100)}%` }}
-                      ></div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <small>Spent: ${budgetStatuses[budget.category].spentAmount}</small>
-                      <small>Remaining: ${budget.targetAmount - budgetStatuses[budget.category].spentAmount}</small>
-                    </div>
                   </div>
                 )}
                 <div className="d-flex justify-content-end gap-2">
