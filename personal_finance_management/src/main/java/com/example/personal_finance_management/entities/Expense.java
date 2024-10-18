@@ -18,6 +18,10 @@ public class Expense {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
+
     @Column(nullable = false)
     private String category;
 

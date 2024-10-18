@@ -2,7 +2,7 @@ import apiClient from "./apiClient";
 
 export const login = async (email, password) => {
   try {
-    const response = await apiClient.post("/auth/login", { email, password });
+    const response = await apiClient.post("/users/login", { email, password });
 
     const { accessToken, tokenType } = response.data;
     localStorage.setItem("jwtToken", `${tokenType} ${accessToken}`);
@@ -15,7 +15,7 @@ export const login = async (email, password) => {
 
 export const register = async (email, password) => {
   try {
-    const response = await apiClient.post("/auth/register", {
+    const response = await apiClient.post("/users/register", {
       email,
       password,
     });

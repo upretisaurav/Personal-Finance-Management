@@ -1,9 +1,13 @@
 package com.example.personal_finance_management.services;
 
 import com.example.personal_finance_management.dto.ExpenseDTO;
+import com.example.personal_finance_management.entities.Budget;
 import com.example.personal_finance_management.entities.Expense;
 import com.example.personal_finance_management.entities.User;
+import com.example.personal_finance_management.enums.BalanceSource;
+import com.example.personal_finance_management.exceptions.ExceptionHanding;
 import com.example.personal_finance_management.exceptions.ResourceNotFoundException;
+import com.example.personal_finance_management.repositories.BudgetRepository;
 import com.example.personal_finance_management.repositories.ExpenseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +22,25 @@ import java.util.stream.Collectors;
 @Transactional
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
+    private final BudgetRepository budgetRepository;
     private final UserService userService;
 
     @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository, UserService userService) {
+    public ExpenseService(ExpenseRepository expenseRepository, BudgetRepository budgetRepository, UserService userService) {
         this.expenseRepository = expenseRepository;
+        this.budgetRepository = budgetRepository;
         this.userService = userService;
     }
 
     public ExpenseDTO createExpense(ExpenseDTO expenseDTO, String userEmail) {
         User user = userService.getCurrentUser(userEmail);
+
+        try {
+            userService.subtractBalance(userEmail, expenseDTO.getAmount());
+        } catch (IllegalArgumentException e) {
+            throw new ExceptionHanding.InsufficientBalanceException("Insufficient balance to create this expense");
+        }
+
         Expense expense = new Expense();
         expense.setUser(user);
         expense.setCategory(expenseDTO.getCategory());
@@ -50,6 +63,7 @@ public class ExpenseService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ExpenseDTO updateExpense(Long expenseId, ExpenseDTO expenseDTO, String userEmail) throws AccessDeniedException {
         User user = userService.getCurrentUser(userEmail);
         Expense expense = expenseRepository.findById(expenseId)
@@ -57,6 +71,15 @@ public class ExpenseService {
 
         if (!expense.getUser().getId().equals(user.getId())) {
             throw new AccessDeniedException("You don't have permission to update this expense");
+        }
+
+        if (!expense.getAmount().equals(expenseDTO.getAmount())) {
+            double difference = expenseDTO.getAmount() - expense.getAmount();
+            if (difference > 0) {
+                userService.subtractBalance(userEmail, difference);
+            } else {
+                userService.addBalance(userEmail, -difference, BalanceSource.OTHER);
+            }
         }
 
         expense.setCategory(expenseDTO.getCategory());
@@ -68,6 +91,7 @@ public class ExpenseService {
         return convertToDTO(updatedExpense);
     }
 
+    @Transactional
     public void deleteExpense(Long expenseId, String userEmail) throws AccessDeniedException {
         User user = userService.getCurrentUser(userEmail);
         Expense expense = expenseRepository.findById(expenseId)
@@ -76,6 +100,8 @@ public class ExpenseService {
         if (!expense.getUser().getId().equals(user.getId())) {
             throw new AccessDeniedException("You don't have permission to delete this expense");
         }
+
+        userService.addBalance(userEmail, expense.getAmount(), BalanceSource.OTHER);
 
         expenseRepository.delete(expense);
     }

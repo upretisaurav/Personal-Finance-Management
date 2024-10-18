@@ -47,4 +47,10 @@ public class ExceptionHanding {
         response.put("error", "An unexpected error occurred");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    public static class InsufficientBalanceException extends RuntimeException {
+        public InsufficientBalanceException(String message) {
+            super(message);
+        }
+    }
 }

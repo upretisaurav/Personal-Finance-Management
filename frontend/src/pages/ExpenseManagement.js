@@ -72,6 +72,10 @@ const ExpenseManagement = () => {
     }
   };
 
+  const modalStyle = {
+    top: '80px', 
+  };
+
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -123,7 +127,7 @@ const ExpenseManagement = () => {
       </div>
 
       {/* Bootstrap Modal */}
-      <div className={`modal ${showExpenseModal ? 'show d-block' : ''}`} tabIndex="-1">
+      <div className={`modal ${showExpenseModal ? 'show d-block' : ''}`} tabIndex="-1" style={modalStyle}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
