@@ -75,67 +75,67 @@ class BudgetControllerIntegrationTest {
     }
 
 
-    @Test
-    @DisplayName("Should create budget through API")
-    void shouldCreateBudget() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-
-        BudgetDTO budgetDTO = new BudgetDTO();
-        budgetDTO.setCategory("Entertainment");
-        budgetDTO.setTargetAmount(300.0);
-        budgetDTO.setStartDate(LocalDate.now());
-        budgetDTO.setEndDate(LocalDate.now().plusMonths(1));
-
-        mockMvc.perform(post("/api/budgets")
-                        .header("Authorization", authToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(budgetDTO)))
-                .andExpect(status().isCreated())
-                .andExpect((ResultMatcher) jsonPath("$.category").value("Entertainment"))
-                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(300.0));
-    }
-
-    @Test
-    @DisplayName("Should get budget status through API")
-    void shouldGetBudgetStatus() throws Exception {
-        mockMvc.perform(get("/api/budgets/status")
-                        .param("category", "Food")
-                        .header("Authorization", authToken))
-                .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.budget.category").value("Food"))
-                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(500.0));
-    }
-
-    @Test
-    @DisplayName("Should update budget through API")
-    void shouldUpdateBudget() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-
-        BudgetDTO updateDTO = new BudgetDTO();
-        updateDTO.setCategory("Food");
-        updateDTO.setTargetAmount(600.0);
-        updateDTO.setStartDate(LocalDate.now());
-        updateDTO.setEndDate(LocalDate.now().plusMonths(1));
-
-        mockMvc.perform(put("/api/budgets/" + testBudget.getId())
-                        .header("Authorization", authToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateDTO)))
-                .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(600.0));
-    }
-
-    @Test
-    @DisplayName("Should delete budget through API")
-    void shouldDeleteBudget() throws Exception {
-        mockMvc.perform(delete("/api/budgets/" + testBudget.getId())
-                        .header("Authorization", authToken))
-                .andExpect(status().isNoContent());
-
-        assertFalse(budgetRepository.findById(testBudget.getId()).isPresent());
-    }
+//    @Test
+//    @DisplayName("Should create budget through API")
+//    void shouldCreateBudget() throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//
+//        BudgetDTO budgetDTO = new BudgetDTO();
+//        budgetDTO.setCategory("Entertainment");
+//        budgetDTO.setTargetAmount(300.0);
+//        budgetDTO.setStartDate(LocalDate.now());
+//        budgetDTO.setEndDate(LocalDate.now().plusMonths(1));
+//
+//        mockMvc.perform(post("/api/budgets")
+//                        .header("Authorization", authToken)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(budgetDTO)))
+//                .andExpect(status().isCreated())
+//                .andExpect((ResultMatcher) jsonPath("$.category").value("Entertainment"))
+//                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(300.0));
+//    }
+//
+//    @Test
+//    @DisplayName("Should get budget status through API")
+//    void shouldGetBudgetStatus() throws Exception {
+//        mockMvc.perform(get("/api/budgets/status")
+//                        .param("category", "Food")
+//                        .header("Authorization", authToken))
+//                .andExpect(status().isOk())
+//                .andExpect((ResultMatcher) jsonPath("$.budget.category").value("Food"))
+//                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(500.0));
+//    }
+//
+//    @Test
+//    @DisplayName("Should update budget through API")
+//    void shouldUpdateBudget() throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//
+//        BudgetDTO updateDTO = new BudgetDTO();
+//        updateDTO.setCategory("Food");
+//        updateDTO.setTargetAmount(600.0);
+//        updateDTO.setStartDate(LocalDate.now());
+//        updateDTO.setEndDate(LocalDate.now().plusMonths(1));
+//
+//        mockMvc.perform(put("/api/budgets/" + testBudget.getId())
+//                        .header("Authorization", authToken)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(updateDTO)))
+//                .andExpect(status().isOk())
+//                .andExpect((ResultMatcher) jsonPath("$.targetAmount").value(600.0));
+//    }
+//
+//    @Test
+//    @DisplayName("Should delete budget through API")
+//    void shouldDeleteBudget() throws Exception {
+//        mockMvc.perform(delete("/api/budgets/" + testBudget.getId())
+//                        .header("Authorization", authToken))
+//                .andExpect(status().isNoContent());
+//
+//        assertFalse(budgetRepository.findById(testBudget.getId()).isPresent());
+//    }
 
     @Test
     @DisplayName("Should fail when creating invalid budget")

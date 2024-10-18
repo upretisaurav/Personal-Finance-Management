@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Typography, Divider } from '@mui/material';
-import { Dashboard, AccountBalance, Receipt, ExitToApp } from '@mui/icons-material';
+import { Dashboard, AccountBalance, Receipt, MonetizationOn, ExitToApp } from '@mui/icons-material';
 
 const drawerWidth = 250;
 
@@ -18,6 +18,7 @@ const AuthenticatedLayout = () => {
     { text: 'Dashboard', icon: <Dashboard />, link: '/dashboard' },
     { text: 'Budgets', icon: <AccountBalance />, link: '/budgets' },
     { text: 'Expenses', icon: <Receipt />, link: '/expenses' },
+    { text: 'Investments', icon: <MonetizationOn />, link: '/investments' },
   ];
 
   return (
@@ -41,10 +42,10 @@ const AuthenticatedLayout = () => {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {menuItems.map((item) => (
-              <ListItem 
-                button 
-                key={item.text} 
-                component={Link} 
+              <ListItem
+                button
+                key={item.text}
+                component={Link}
                 to={item.link}
                 selected={location.pathname === item.link}
               >
