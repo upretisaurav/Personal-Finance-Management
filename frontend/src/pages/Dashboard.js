@@ -18,10 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchBalance();
     fetchBalanceSources();
-    fetchMonthlyExpenses();
     fetchInvestments();
-    fetchBudgetVsActual();
-    fetchRecentTransactions();
   }, []);
 
   const fetchBalance = async () => {
@@ -42,15 +39,6 @@ const Dashboard = () => {
     }
   };
 
-  const fetchMonthlyExpenses = async () => {
-    try {
-      const response = await apiClient.get('/expenses/monthly');
-      setMonthlyExpenses(response.data);
-    } catch (error) {
-      console.error('Error fetching monthly expenses:', error);
-    }
-  };
-
   const fetchInvestments = async () => {
     try {
       const response = await apiClient.get('/investments');
@@ -60,23 +48,6 @@ const Dashboard = () => {
     }
   };
 
-  const fetchBudgetVsActual = async () => {
-    try {
-      const response = await apiClient.get('/budgets/vs-actual');
-      setBudgetVsActual(response.data);
-    } catch (error) {
-      console.error('Error fetching budget vs actual:', error);
-    }
-  };
-
-  const fetchRecentTransactions = async () => {
-    try {
-      const response = await apiClient.get('/transactions/recent');
-      setRecentTransactions(response.data);
-    } catch (error) {
-      console.error('Error fetching recent transactions:', error);
-    }
-  };
 
   const handleAddBalance = async (e) => {
     e.preventDefault();
