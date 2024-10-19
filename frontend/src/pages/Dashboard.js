@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import apiClient from '../api/apiClient';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
@@ -10,10 +9,7 @@ const Dashboard = () => {
   const [source, setSource] = useState('');
   const [balanceSources, setBalanceSources] = useState([]);
   const [showAddBalance, setShowAddBalance] = useState(false);
-  const [monthlyExpenses, setMonthlyExpenses] = useState([]);
   const [investments, setInvestments] = useState([]);
-  const [budgetVsActual, setBudgetVsActual] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
 
   useEffect(() => {
     fetchBalance();

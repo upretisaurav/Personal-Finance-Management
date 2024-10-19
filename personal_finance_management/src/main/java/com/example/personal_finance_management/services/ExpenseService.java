@@ -1,13 +1,11 @@
 package com.example.personal_finance_management.services;
 
 import com.example.personal_finance_management.dto.ExpenseDTO;
-import com.example.personal_finance_management.entities.Budget;
 import com.example.personal_finance_management.entities.Expense;
 import com.example.personal_finance_management.entities.User;
 import com.example.personal_finance_management.enums.BalanceSource;
 import com.example.personal_finance_management.exceptions.ExceptionHanding;
 import com.example.personal_finance_management.exceptions.ResourceNotFoundException;
-import com.example.personal_finance_management.repositories.BudgetRepository;
 import com.example.personal_finance_management.repositories.ExpenseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +20,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
-    private final BudgetRepository budgetRepository;
     private final UserService userService;
 
     @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository, BudgetRepository budgetRepository, UserService userService) {
+    public ExpenseService(ExpenseRepository expenseRepository, UserService userService) {
         this.expenseRepository = expenseRepository;
-        this.budgetRepository = budgetRepository;
         this.userService = userService;
     }
 
